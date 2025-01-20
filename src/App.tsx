@@ -1,7 +1,8 @@
 import "./styles.css";
 import "@amigoapp/doca/dist/css/doca.min.css";
-import { ToastContainer, Button } from "@amigoapp/doca-react";
-import { Routes } from "react-router-dom";
+import { ToastContainer } from "@amigoapp/doca-react";
+import { Route, Routes } from "react-router-dom";
+import RegisterFormView from "./views";
 
 const TOAST_OPTIONS = {
   autoClose: 2500,
@@ -18,13 +19,10 @@ const TOAST_OPTIONS = {
 const App = () => (
   <>
     <ToastContainer {...TOAST_OPTIONS} />
-    <div
-      className="doca-flex doca-flex-col doca-w-96 doca-text-lg"
-    >
-      Cadastro
-      <Button variant="primary">sajkasl</Button>
-    </div>
-    <Routes></Routes>
+
+    <Routes>
+      <Route path="/" element={<RegisterFormView/>} />
+    </Routes>
   </>
 );
 
