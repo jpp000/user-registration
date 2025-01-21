@@ -7,6 +7,7 @@ import {
 } from "../../schemas/register-form";
 import { useNavigate } from "react-router-dom";
 import useRegisterStore from "../../stores/registerStore";
+import { useCallback } from "react";
 
 function RegisterFormContainer() {
   const navigate = useNavigate();
@@ -20,28 +21,31 @@ function RegisterFormContainer() {
   } = useForm({
     resolver: yupResolver<RegisterFormSchema>(registerFormSchema),
     defaultValues: {
-    name: user.name ?? "",
-    email: user.email ?? "",
-    password: user.password ?? "",
-    confirmPassword: user.confirmPassword ?? "",
-  },
+      name: user.name ?? "",
+      email: user.email ?? "",
+      password: user.password ?? "",
+      confirmPassword: user.confirmPassword ?? "",
+    },
   });
 
-  const onSubmit: SubmitHandler<RegisterFormSchema> = (data) => {
-    setUser(data);
-    navigate("/user-details");
-  };
+  const onSubmit: SubmitHandler<RegisterFormSchema> = useCallback(
+    (data) => {
+      setUser(data);
+      navigate("/user-details");
+    },
+    [setUser, navigate]
+  );
 
-  const clearForm = async () => {
+  const clearForm = useCallback(() => {
     clearUser();
 
     reset({
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     });
-  };
+  }, [clearUser, reset]);
 
   return (
     <RegisterForm
