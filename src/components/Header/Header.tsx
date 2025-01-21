@@ -6,7 +6,7 @@ function Header() {
       <div className="doca-flex align-center">
         <Sidebar menu={[]} />{" "}
         <Text size="base" variant="dark" weight="normal">
-          Register.ai
+          Cadastre.ai
         </Text>
       </div>
     </header>

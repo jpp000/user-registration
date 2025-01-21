@@ -1,8 +1,49 @@
 import { Input, PasswordInput, Button } from "@amigoapp/doca-react";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
+import { RegisterFormSchema } from "../../schemas/register-form";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  SubmitHandler,
+  UseFormHandleSubmit,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
+import useRegisterStore from "../../stores/registerStore";
 
-function RegisterForm() {
+interface RegisterFormProps {
+  register: UseFormRegister<RegisterFormSchema>;
+  setValue: UseFormSetValue<RegisterFormSchema>;
+  handleSubmit: UseFormHandleSubmit<RegisterFormSchema>;
+  errors: FieldErrors<RegisterFormSchema>;
+  onSubmit: SubmitHandler<RegisterFormSchema>;
+  control: Control<RegisterFormSchema>;
+}
+
+function RegisterForm({
+  control,
+  setValue,
+  handleSubmit,
+  onSubmit,
+  errors,
+}: RegisterFormProps) {
+  const { setUser } = useRegisterStore();
+
+  const clearForm = () => {
+    setUser({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    });
+    setValue("name", "");
+    setValue("email", "");
+    setValue("password", "");
+    setValue("confirmPassword", "");
+  };
+
   return (
     <div className="align-center doca-flex-col">
       <Header />
@@ -11,66 +52,74 @@ function RegisterForm() {
 
       <form
         className="doca-flex doca-flex-col doca-items-center doca-gap-5 doca-w-96"
-        action=""
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <Input
-          error=""
-          label="Nome"
-          name="input"
-          className="doca-w-full"
-          onRightSectionClick={function noRefCheck() {}}
-          required
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
+            <Input
+              error={errors.name?.message}
+              label="Nome"
+              {...field}
+              className="doca-w-full"
+              required
+            />
+          )}
         />
 
-        <Input
-          error=""
-          label="Email"
-          name="input"
-          className="doca-w-full"
-          onRightSectionClick={function noRefCheck() {}}
-          required
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <Input
+              error={errors.email?.message}
+              label="Email"
+              {...field}
+              className="doca-w-full"
+              required
+            />
+          )}
         />
 
-        <PasswordInput
-          error=""
-          label="Senha"
-          name="PasswordInput"
-          className="doca-w-full"
-          onChange={function noRefCheck() {}}
-          onRightSectionClick={function noRefCheck() {}}
-          required
-          reservedWords={[]}
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <PasswordInput
+              error={errors.password?.message}
+              label="Senha"
+              {...field}
+              className="doca-w-full"
+              required
+            />
+          )}
         />
 
-        <PasswordInput
-          error=""
-          label="Confirmar Senha"
-          name="PasswordInput"
-          className="doca-w-full"
-          onChange={function noRefCheck() {}}
-          onRightSectionClick={function noRefCheck() {}}
-          required
-          reservedWords={[]}
+        <Controller
+          name="confirmPassword"
+          control={control}
+          render={({ field }) => (
+            <PasswordInput
+              error={errors.confirmPassword?.message}
+              label="Confirmar Senha"
+              {...field}
+              className="doca-w-full"
+              required
+            />
+          )}
         />
 
-        <Button
-          block
-          onClick={function noRefCheck() {}}
-          size="normal"
-          variant="primary"
-        >
+        <Button type="submit" block variant="primary">
           Enviar
         </Button>
+      </form>
 
-        <Button
-          block
-          onClick={function noRefCheck() {}}
-          size="normal"
-          variant="danger"
-        >
+      <div className="doca-mt-5 doca-w-96">
+        <Button onClick={clearForm} block iconRight="trash" variant="secondary">
           Limpar dados
         </Button>
-      </form>
+      </div>
     </div>
   );
 }

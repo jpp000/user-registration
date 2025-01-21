@@ -19,9 +19,9 @@ const TOAST_OPTIONS = {
 const App = () => (
   <>
     <ToastContainer {...TOAST_OPTIONS} />
-
+    
     <Routes>
-      <Route path="/" element={<RegisterFormView/>} />
+      <Route path="/" element={<RegisterFormView />} />
     </Routes>
   </>
 );
