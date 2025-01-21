@@ -1,5 +1,7 @@
 import * as yup from "yup";
 
+const uppercaseRegex = /^(?=.*[A-Z])/;
+
 const registerFormSchema = yup.object({
   name: yup
     .string()
@@ -12,6 +14,7 @@ const registerFormSchema = yup.object({
   password: yup
     .string()
     .min(3, "A senha deve ter no mínimo 3 digitos")
+    .matches(uppercaseRegex, 'A senha deve ter pelo menos uma letra maiúscula')
     .required("A senha é um campo obrigatório"),
   confirmPassword: yup
     .string()

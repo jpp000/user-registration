@@ -8,47 +8,28 @@ import {
   FieldErrors,
   SubmitHandler,
   UseFormHandleSubmit,
-  UseFormRegister,
-  UseFormSetValue,
 } from "react-hook-form";
-import useRegisterStore from "../../stores/registerStore";
 
-interface RegisterFormProps {
-  register: UseFormRegister<RegisterFormSchema>;
-  setValue: UseFormSetValue<RegisterFormSchema>;
-  handleSubmit: UseFormHandleSubmit<RegisterFormSchema>;
-  errors: FieldErrors<RegisterFormSchema>;
-  onSubmit: SubmitHandler<RegisterFormSchema>;
+type RegisterFormProps = {
   control: Control<RegisterFormSchema>;
+  handleSubmit: UseFormHandleSubmit<RegisterFormSchema>;
+  onSubmit: SubmitHandler<RegisterFormSchema>;
+  clearForm: () => void;
+  errors: FieldErrors<RegisterFormSchema>;
 }
 
 function RegisterForm({
   control,
-  setValue,
   handleSubmit,
   onSubmit,
+  clearForm,
   errors,
 }: RegisterFormProps) {
-  const { setUser } = useRegisterStore();
-
-  const clearForm = () => {
-    setUser({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: ""
-    });
-    setValue("name", "");
-    setValue("email", "");
-    setValue("password", "");
-    setValue("confirmPassword", "");
-  };
-
   return (
     <div className="align-center doca-flex-col">
       <Header />
 
-      <Hero />
+      <Hero name={"Faça seu Cadastro"} />
 
       <form
         className="doca-flex doca-flex-col doca-items-center doca-gap-5 doca-w-96"

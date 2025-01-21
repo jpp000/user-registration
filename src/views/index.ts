@@ -1,3 +1,4 @@
 import RegisterFormView from "./RegisterForm";
+import UserDetailsView from "./UserDetails";
 
-export default RegisterFormView
+export { RegisterFormView, UserDetailsView };

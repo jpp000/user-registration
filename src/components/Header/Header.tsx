@@ -1,12 +1,12 @@
 import { Sidebar, Text } from "@amigoapp/doca-react";
 
-function Header() {
+function Header({ name }: { name?: string }) {
   return (
     <header className="doca-m-4">
-      <div className="doca-flex align-center">
-        <Sidebar menu={[]} />{" "}
+      <div className="align-center">
+        <Sidebar menu={[]} />
         <Text size="base" variant="dark" weight="normal">
-          Cadastre.ai
+          {name ? name : "Cadastre.ai"}
         </Text>
       </div>
     </header>

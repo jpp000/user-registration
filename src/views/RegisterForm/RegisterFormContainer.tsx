@@ -10,36 +10,45 @@ import useRegisterStore from "../../stores/registerStore";
 
 function RegisterFormContainer() {
   const navigate = useNavigate();
-  const { user, setUser } = useRegisterStore();
+  const { user, setUser, clearUser } = useRegisterStore();
 
   const {
     control,
-    register,
-    setValue,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver<RegisterFormSchema>(registerFormSchema),
     defaultValues: {
-      name: user.name ?? "",
-      email: user.email ?? "",
-      password: user.password ?? "",
-      confirmPassword: user.confirmPassword ?? "",
-    },
+    name: user.name ?? "",
+    email: user.email ?? "",
+    password: user.password ?? "",
+    confirmPassword: user.confirmPassword ?? "",
+  },
   });
 
-  const onSubmit: SubmitHandler<RegisterFormSchema> = async (data) => {
+  const onSubmit: SubmitHandler<RegisterFormSchema> = (data) => {
     setUser(data);
-    navigate("/"); // -> /user-info
+    navigate("/user-details");
+  };
+
+  const clearForm = async () => {
+    clearUser();
+
+    reset({
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    });
   };
 
   return (
     <RegisterForm
       control={control}
-      setValue={setValue}
-      register={register}
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
+      clearForm={clearForm}
       errors={errors}
     />
   );
